@@ -1,0 +1,17 @@
+export const DEFAULT_ACCOUNT_CODES = {
+  caja: "1.1.01.001",
+  banco: "1.1.02.001",
+  clientes: "1.1.03.001",
+  ivaCF: "1.1.06.001",
+  proveedores: "2.1.01.001",
+  ivaDF: "2.1.02.001",
+  sueldosPorPagar: "2.1.06.001",
+  retencionImpuesto: "2.1.03.001",
+  retencionAFP: "2.1.03.002",
+  retencionSalud: "2.1.03.003",
+  retencionCesantia: "2.1.03.004",
+  ventas: "4.1.01.001",
+  costoMercaderias: "4.2.01.001",
+  sueldosSalarios: "4.3.01.001",
+  leyesSociales: "4.3.01.003",
+} as const;
