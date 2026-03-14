@@ -1,0 +1,62 @@
+{
+  "name": "@emisso/accounting",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Double-entry accounting engine for Chilean businesses — SII electronic books, IVA, PPM, Balance de 8 Columnas",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "test": "vitest",
+    "test:run": "vitest --run",
+    "lint": "tsc --noEmit",
+    "prepublishOnly": "pnpm run build"
+  },
+  "keywords": [
+    "accounting",
+    "double-entry",
+    "chile",
+    "sii",
+    "contabilidad",
+    "libro-diario",
+    "libro-mayor",
+    "balance-8-columnas",
+    "iva",
+    "ppm"
+  ],
+  "author": "Emisso <hello@emisso.ai>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/emisso-ai/emisso-accounting",
+    "directory": "packages/engine"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "zod": "^3.23.0"
+  },
+  "optionalDependencies": {
+    "fast-xml-parser": "^5.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "tsup": "^8.3.0",
+    "tsx": "^4.21.0",
+    "typescript": "^5.7.0",
+    "vitest": "^2.1.0"
+  }
+}
