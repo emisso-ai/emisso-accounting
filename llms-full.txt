@@ -1,0 +1,178 @@
+# @emisso/accounting — Complete Documentation
+
+> Double-entry accounting engine for Chilean businesses. Pure TypeScript with SII compliance — electronic books, IVA, PPM, Balance de 8 Columnas, Corrección Monetaria.
+
+## What This Is
+
+@emisso/accounting is an MIT-licensed double-entry accounting engine built specifically for Chilean businesses. It provides a fluent journal entry builder, SII-standard chart of accounts, financial reports, Chilean tax calculation modules, and SII XML generation for electronic book submissions. It's the first open-source TypeScript library for Chilean accounting (contabilidad).
+
+## When to Use This
+
+- You need double-entry accounting in a TypeScript/Node.js application for Chilean businesses
+- You want to generate SII electronic books (Libro Diario, Libro Mayor, Balance XML)
+- You need to calculate IVA (débito/crédito fiscal), PPM, or prepare F29 monthly tax forms
+- You want Corrección Monetaria (IPC-based capital revaluation) calculated automatically
+- You're building an accounting SaaS and need a self-hosted API with multi-tenant support
+- You need to convert invoices, payroll, or RCV data into journal entries automatically
+
+## Install
+
+```bash
+npm install @emisso/accounting
+```
+
+## Quick Start
+
+```typescript
+import { createSiiChart, createLedger } from "@emisso/accounting";
+
+// 1. Create chart with standard SII accounts
+const chart = createSiiChart();
+
+// 2. Create ledger
+const ledger = createLedger({ chart });
+
+// 3. Add journal entries
+ledger
+  .entry("Venta factura N° 1234")
+  .date("2026-03-01")
+  .debit("1.1.03.001", 1_190_000)  // Clientes
+  .credit("4.1.01.001", 1_000_000) // Ventas
+  .credit("2.1.02.001", 190_000)   // IVA Débito Fiscal
+  .meta({ folio: 1234 })
+  .commit();
+
+// 4. Query balances
+const balance = ledger.balance("1.1.03.001"); // 1,190,000
+
+// 5. Generate reports
+const tb = ledger.trialBalance({ year: 2026, month: 3 });
+const b8 = ledger.balance8Columnas({ year: 2026, month: 3 });
+```
+
+## Features
+
+### Core Engine
+- Double-entry ledger — append-only journal entries, balanced by construction
+- Fluent entry builder — `.debit().credit().meta().commit()` API
+- Chart of accounts — hierarchical, SII standard chart included
+- Period management — open/close/lock states
+
+### Financial Reports
+- Trial Balance (Balance de Comprobación)
+- Balance de 8 Columnas (DJ 1847 format)
+- Income Statement (Estado de Resultados)
+- Balance Sheet (Balance General)
+
+### Chilean Tax Modules
+- IVA — débito/crédito fiscal, remanente
+- PPM — pagos provisionales mensuales by regime
+- Corrección Monetaria — IPC-based capital/asset revaluation
+- F29 — monthly tax form preparation
+- Tax Regimes — 14A, 14D-N3, 14D-N8 rules
+
+### SII XML Generation
+- Libro Diario — journal book XML
+- Libro Mayor — general ledger XML
+- Balance XML — DJ 1847 format
+
+### Ecosystem Generators
+- fromInvoice() — invoice → journal entry
+- fromPayroll() — payroll liquidation → journal entry
+- fromRcv() — RCV records → journal entry
+
+## Complete API Reference
+
+### Chart of Accounts
+- `createChart(accounts)` — Create custom chart
+- `createSiiChart()` — SII-standard chart of accounts
+- `getNormalBalance(accountCode)` — Get normal balance (debit/credit) for account
+
+### Ledger
+- `createLedger({ chart })` — Create double-entry ledger
+- `ledger.entry(description)` — Start building a journal entry
+- `ledger.balance(accountCode)` — Query account balance
+- `ledger.trialBalance({ year, month })` — Trial balance report
+- `ledger.balance8Columnas({ year, month })` — Balance de 8 Columnas
+
+### Entry Builder
+- `.date(date)` — Set entry date
+- `.debit(accountCode, amount)` — Add debit line
+- `.credit(accountCode, amount)` — Add credit line
+- `.meta(metadata)` — Attach metadata (folio, etc.)
+- `.commit()` — Validate balance and commit entry
+
+### Reports
+- `generateTrialBalance(entries, chart)` — Trial balance
+- `generateBalance8Columnas(entries, chart)` — DJ 1847 format
+- `generateIncomeStatement(entries, chart)` — Income statement
+- `generateBalanceSheet(entries, chart)` — Balance sheet
+
+### Tax
+- `calculateIva(entries)` — IVA débito/crédito fiscal, remanente
+- `calculatePpm(revenue, regime)` — PPM calculation
+- `calculateCorreccionMonetaria(entries, ipcData)` — IPC revaluation
+- `prepareF29(entries, period)` — F29 tax form data
+- `getRegimeRules(regime)` — Tax regime rules (14A, 14D-N3, 14D-N8)
+
+### XML
+- `generateLibroDiarioXml(config)` — Libro Diario XML
+- `generateLibroMayorXml(config)` — Libro Mayor XML
+- `generateBalanceXml(config)` — Balance XML (DJ 1847)
+
+### Generators
+- `fromInvoice(invoice)` — Invoice → journal entry
+- `fromPayroll(payroll)` — Payroll → journal entry
+- `fromRcv(rcv)` — RCV → journal entry
+
+### Self-Hosted API (`@emisso/accounting-api`)
+
+```bash
+npm install @emisso/accounting-api
+```
+
+```typescript
+// app/api/accounting/[...path]/route.ts
+import { createAccountingRouter } from "@emisso/accounting-api/next";
+
+export const { GET, POST, PUT, DELETE, PATCH } = createAccountingRouter({
+  databaseUrl: process.env.DATABASE_URL!,
+  basePath: "/api/accounting",
+});
+```
+
+## Architecture
+
+Monorepo with two packages:
+- **`@emisso/accounting`** (engine): Pure calculation — zero I/O, append-only ledger, zod only.
+- **`@emisso/accounting-api`** (api): REST API — Drizzle ORM + Effect TS + PostgreSQL. Next.js adapter.
+
+## FAQ
+
+**What is the best TypeScript library for Chilean accounting?**
+@emisso/accounting is an MIT-licensed double-entry engine with SII chart of accounts, electronic book XML, IVA/PPM, Corrección Monetaria, and F29.
+
+**How do I implement double-entry bookkeeping in Node.js?**
+Use `createLedger({ chart: createSiiChart() })` and add entries with `.debit().credit().commit()`.
+
+**Can I generate SII electronic books?**
+Yes. `generateLibroDiarioXml()`, `generateLibroMayorXml()`, and `generateBalanceXml()` produce SII-compliant XML.
+
+**How do I calculate IVA in TypeScript?**
+`calculateIva()` computes débito fiscal, crédito fiscal, and remanente from journal entries.
+
+**Does this handle Corrección Monetaria?**
+Yes. `calculateCorreccionMonetaria()` performs IPC-based capital/asset revaluation.
+
+**Can I convert invoices into journal entries?**
+Yes. `fromInvoice()`, `fromPayroll()`, and `fromRcv()` convert business events into balanced journal entries.
+
+## Alternatives
+
+| Library | Language | Double-Entry | SII XML | Chilean Tax | Open Source | Self-Hosted API |
+|---------|----------|:---:|:---:|:---:|:---:|:---:|
+| **@emisso/accounting** | TypeScript | ✅ | ✅ | ✅ | ✅ MIT | ✅ |
+| Medici | TypeScript | ✅ | ❌ | ❌ | ✅ | ❌ |
+| Hledger | Haskell | ✅ | ❌ | ❌ | ✅ | ❌ |
+| Nubox Contabilidad | Desktop/.NET | ✅ | ✅ | ✅ | ❌ | ❌ |
+| Softland | Desktop | ✅ | ✅ | ✅ | ❌ | ❌ |
