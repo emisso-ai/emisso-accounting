@@ -86,6 +86,61 @@ export const { GET, POST, PUT, DELETE, PATCH } = createAccountingRouter({
 });
 ```
 
+## CLI
+
+```bash
+npm install -g @emisso/accounting-cli
+```
+
+### Commands
+
+| Command | Description |
+|---------|-------------|
+| `accounting chart list` | List all accounts (filter with `--type asset\|liability\|equity\|revenue\|expense`) |
+| `accounting chart show <code>` | Show account details |
+| `accounting chart seed` | Initialize chart of accounts (creates ledger file) |
+| `accounting entry add -i entry.json` | Create journal entry from JSON |
+| `accounting entry list` | List all journal entries |
+| `accounting entry show <id>` | Display entry details |
+| `accounting entry void <id>` | Void an entry (creates reversing entry) |
+| `accounting import invoice -i invoice.json` | Convert invoice → journal entry |
+| `accounting import payroll -i payroll.json` | Convert payroll liquidation → journal entry |
+| `accounting import rcv -i rcv.json` | Convert RCV records → journal entry |
+| `accounting report trial-balance --period 2026-03` | Trial Balance |
+| `accounting report balance-8-columnas --period 2026-03` | Balance de 8 Columnas (DJ 1847) |
+| `accounting report income-statement --period 2026-03` | Income Statement |
+| `accounting report balance-sheet --period 2026-03` | Balance Sheet |
+| `accounting tax iva --period 2026-03` | IVA calculation |
+| `accounting tax ppm --period 2026-03` | PPM calculation |
+| `accounting tax f29 --period 2026-03` | F29 monthly tax form |
+| `accounting xml libro-diario --period 2026-03` | Generate Libro Diario XML |
+| `accounting xml libro-mayor --period 2026-03` | Generate Libro Mayor XML |
+| `accounting xml balance --period 2026-03` | Generate Balance XML |
+| `accounting period list` | List all periods |
+| `accounting period open --period 2026-03` | Open a period |
+| `accounting period close --period 2026-03` | Close a period |
+| `accounting period lock --period 2026-03` | Lock a period (immutable) |
+| `accounting doctor` | Check system health and dependencies |
+
+### Configuration
+
+CLI flags take precedence over environment variables:
+
+| Flag | Environment Variable | Description |
+|------|---------------------|-------------|
+| `--ledger` | `ACCOUNTING_LEDGER` | Path to ledger JSON file |
+| `--regime` | `ACCOUNTING_REGIME` | Tax regime (`14A`, `14D-N3`, `14D-N8`) |
+| `--rut` | `ACCOUNTING_RUT` | Company RUT (for XML generation) |
+
+### Output Formats
+
+All commands support `--format table|csv|json|html` and `--json` shorthand.
+
+```bash
+accounting report trial-balance --period 2026-03 --json
+accounting chart list --format csv > accounts.csv
+```
+
 ## License
 
 MIT
