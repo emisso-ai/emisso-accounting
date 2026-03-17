@@ -1,6 +1,6 @@
 # @emisso/accounting
 
-Double-entry accounting engine for Chilean businesses.
+Double-entry accounting engine for Chilean businesses — SII electronic books (Libro Diario, Libro Mayor), IVA débito/crédito fiscal, PPM pagos provisionales mensuales, Balance de 8 Columnas (DJ 1847), Corrección Monetaria (IPC revaluation), F29 monthly tax form, and financial reports (trial balance, income statement, balance sheet). Pure TypeScript with SII-standard chart of accounts (plan de cuentas). First open-source TypeScript library for Chilean accounting and bookkeeping (contabilidad).
 
 ## Structure
 
