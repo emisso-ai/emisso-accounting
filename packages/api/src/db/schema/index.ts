@@ -3,9 +3,7 @@
  * All tables live in the PostgreSQL `accounting` schema.
  */
 
-import { pgSchema } from "drizzle-orm/pg-core";
-
-export const accountingSchema = pgSchema("accounting");
+export { accountingSchema } from "./_schema.js";
 
 export { accounts } from "./accounts.js";
 export type { AccountRow, NewAccountRow } from "./accounts.js";

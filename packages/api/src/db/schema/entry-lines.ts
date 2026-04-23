@@ -1,4 +1,4 @@
-import { accountingSchema } from "./index.js";
+import { accountingSchema } from "./_schema.js";
 import { uuid, text, numeric } from "drizzle-orm/pg-core";
 import { journalEntries } from "./journal-entries.js";
 
