@@ -1,6 +1,6 @@
 {
   "name": "@emisso/accounting-cli",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "CLI for Chilean double-entry accounting — SII books, IVA, PPM, F29, Balance de 8 Columnas",
   "type": "module",
   "main": "./dist/src/index.cjs",
