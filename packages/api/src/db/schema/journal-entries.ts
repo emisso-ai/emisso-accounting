@@ -1,4 +1,4 @@
-import { accountingSchema } from "./index.js";
+import { accountingSchema } from "./_schema.js";
 import { uuid, text, date, integer, timestamp, jsonb } from "drizzle-orm/pg-core";
 
 export const journalEntries = accountingSchema.table("journal_entries", {
