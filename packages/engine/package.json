@@ -3,14 +3,14 @@
   "version": "0.2.0",
   "type": "module",
   "description": "Double-entry accounting engine for Chilean businesses — SII electronic books, IVA, PPM, Balance de 8 Columnas",
-  "main": "./dist/index.js",
-  "module": "./dist/index.mjs",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.js"
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
     }
   },
   "files": [
@@ -34,7 +34,21 @@
     "libro-mayor",
     "balance-8-columnas",
     "iva",
-    "ppm"
+    "ppm",
+    "plan-de-cuentas",
+    "chart-of-accounts",
+    "general-ledger",
+    "correccion-monetaria",
+    "f29",
+    "estado-resultados",
+    "balance-general",
+    "trial-balance",
+    "asientos-contables",
+    "journal-entry",
+    "typescript",
+    "sdk",
+    "latin-america",
+    "latam"
   ],
   "author": "Emisso <hello@emisso.ai>",
   "license": "MIT",

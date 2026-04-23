@@ -1,8 +1,9 @@
 # @emisso/accounting
 
-> Double-entry accounting engine for Chilean businesses.
+> Double-entry accounting engine for Chilean businesses — SII electronic books, IVA, PPM, Balance de 8 Columnas, Corrección Monetaria.
 
 - Repo: https://github.com/emisso-ai/emisso-accounting
+- npm: https://www.npmjs.com/package/@emisso/accounting
 - License: MIT
 
 ## Install
@@ -18,14 +19,39 @@ npm install @emisso/accounting
 
 - @emisso/accounting — Pure engine (chart of accounts, ledger, reports, tax, XML)
 - @emisso/accounting-api — REST API with Effect TS + Drizzle + PostgreSQL
+- @emisso/accounting-cli — Command-line interface for chart seeding, entries, imports, reports
 
 ## Key Features
 
-- Double-entry ledger with append-only journal entries
-- SII standard chart of accounts (hierarchical dot notation)
-- Financial reports: trial balance, 8 columnas, income statement, balance sheet
-- Chilean tax: IVA, PPM, CM, F29
-- SII XML generation: libro diario, libro mayor, balance
-- Generators: invoice, payroll, RCV to journal entries
+- Double-entry ledger with fluent journal entry builder (append-only)
+- SII-standard chart of accounts (plan de cuentas, hierarchical dot notation)
+- Financial reports: trial balance, Balance de 8 Columnas, income statement, balance sheet
+- Chilean tax: IVA (débito/crédito fiscal), PPM, Corrección Monetaria, F29
+- Tax regime support: 14A, 14D-N3, 14D-N8
+- SII XML generation: Libro Diario, Libro Mayor, Balance XML
+- Generators: invoice → journal entry, payroll → journal entry, RCV → journal entry
 - Integer CLP arithmetic (no floating point)
 - Self-hosted REST API with multi-tenant support
+
+## API
+
+- `createSiiChart()` — Create SII-standard chart of accounts
+- `createLedger({ chart })` — Create double-entry ledger
+- `ledger.entry(desc).debit(code, amount).credit(code, amount).commit()` — Add journal entry
+- `ledger.balance(accountCode)` — Query account balance
+- `ledger.trialBalance({ year, month })` — Generate trial balance
+- `ledger.balance8Columnas({ year, month })` — Balance de 8 Columnas
+- `generateTrialBalance(entries, chart)` — Trial balance report
+- `generateBalance8Columnas(entries, chart)` — DJ 1847 format
+- `generateIncomeStatement(entries, chart)` — Income statement
+- `generateBalanceSheet(entries, chart)` — Balance sheet
+- `calculateIva(entries)` — IVA débito/crédito fiscal
+- `calculatePpm(revenue, regime)` — PPM calculation
+- `calculateCorreccionMonetaria(entries, ipcData)` — IPC revaluation
+- `prepareF29(entries, period)` — F29 monthly tax form
+- `generateLibroDiarioXml(config)` — SII journal book XML
+- `generateLibroMayorXml(config)` — SII general ledger XML
+- `generateBalanceXml(config)` — SII balance XML
+- `fromInvoice(invoice)` — Invoice → journal entry
+- `fromPayroll(payroll)` — Payroll → journal entry
+- `fromRcv(rcv)` — RCV → journal entry
