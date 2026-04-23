@@ -8,10 +8,19 @@
 
 ## Architecture
 
-Monorepo with two packages:
+Monorepo with three packages:
 
 - **`packages/engine`** (`@emisso/accounting`) — Pure calculation engine. Zero I/O, zod only. Append-only ledger, fluent entry builder.
 - **`packages/api`** (`@emisso/accounting-api`) — REST API layer. Drizzle ORM + Effect TS + PostgreSQL. Next.js adapter included.
+- **`packages/cli`** (`@emisso/accounting-cli`) — Command-line interface for chart seeding, entry management, period operations, imports (invoice/payroll/RCV), and reports.
+
+## Key Invariants
+
+- Journal entries are **append-only** — never mutated, voided by reverse entry
+- All entries must balance: `sum(debits) === sum(credits)`
+- CLP has **no decimals** — all amounts are integers
+- Account codes follow hierarchical dot notation: `1.1.01.001`
+- Normal balance: assets/expenses = debit, liabilities/equity/revenue = credit
 
 ## Getting Started
 
@@ -54,7 +63,11 @@ const balance = ledger.balance("1.1.03.001"); // 1,190,000
 | `packages/engine/src/xml/` | SII XML generation (libro diario, mayor, balance) |
 | `packages/engine/src/generators/` | Invoice/payroll/RCV → journal entries |
 | `packages/api/src/index.ts` | API package exports |
+| `packages/api/src/handlers/` | HTTP handlers + router |
 | `packages/api/src/adapters/next.ts` | Next.js App Router adapter |
+| `packages/api/src/db/schema/` | Drizzle database schema |
+| `packages/cli/bin/accounting.ts` | CLI entry point |
+| `packages/cli/src/commands/` | CLI command implementations |
 
 ## Development
 
