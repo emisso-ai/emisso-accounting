@@ -1,6 +1,6 @@
 {
   "name": "@emisso/accounting-api",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Full API layer — routes, services, and database for @emisso/accounting",
   "type": "module",
   "main": "./dist/index.cjs",
