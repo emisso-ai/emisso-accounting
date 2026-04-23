@@ -1,6 +1,6 @@
 {
   "name": "@emisso/accounting-cli",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "CLI for Chilean double-entry accounting — SII books, IVA, PPM, F29, Balance de 8 Columnas",
   "type": "module",
   "main": "./dist/src/index.cjs",
@@ -16,7 +16,9 @@
       "require": "./dist/src/index.cjs"
     }
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
@@ -26,9 +28,19 @@
     "prepublishOnly": "npm run build"
   },
   "keywords": [
-    "accounting", "chile", "cli", "contabilidad", "sii", "iva", "ppm",
-    "f29", "balance-8-columnas", "libro-diario", "double-entry",
-    "typescript", "sdk"
+    "accounting",
+    "chile",
+    "cli",
+    "contabilidad",
+    "sii",
+    "iva",
+    "ppm",
+    "f29",
+    "balance-8-columnas",
+    "libro-diario",
+    "double-entry",
+    "typescript",
+    "sdk"
   ],
   "author": "Emisso <hello@emisso.ai>",
   "license": "MIT",
