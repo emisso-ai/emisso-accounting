@@ -1,6 +1,6 @@
 {
   "name": "@emisso/accounting",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "type": "module",
   "description": "Double-entry accounting engine for Chilean businesses — SII electronic books, IVA, PPM, Balance de 8 Columnas",
   "main": "./dist/index.js",
